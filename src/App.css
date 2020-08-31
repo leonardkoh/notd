@@ -2,12 +2,31 @@
 
 body {
   font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+}
+
+h1 {
+  font-size: 1.4em;
+  margin: 0px;
+}
+h2 {
+  font-size: 1.2em;
+  margin: 0px;
+}
+
+ul {
+  margin: 0px;
+  padding: 0px
 }
 
 li {
   list-style: none;
 }
 
-.theme-blue {
-  color: #1584E6
+.article-heading {
+  color: #1584E6;
+}
+
+.header-background {
+  background: #1584E6;
 }

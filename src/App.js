@@ -4,22 +4,31 @@ import './App.css';
 
 const cheerio = require('cheerio');
 
-let url = "https://www.abc.net.au/news/justin/";
+//health > https://www.news.com.au/lifestyle/health
+//business > https://www.news.com.au/finance/business/breaking-news
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Header />
-      <header className="App-header">
       <Content />
-      </header>
+      <Footer />
     </div>
   );
 }
 
 function Header() {
   return (
-    <div>HEADER</div>
+    <div className="header-background text-white row py-2">
+      <h2 className="col text-left ml-3">home-icon</h2>
+      <h2 className="col text-right mr-3">menu items</h2>
+    </div>
+  )
+}
+
+function Footer() {
+  return (
+    <div className="text-center py-2">Built with &#9829; by LK</div>
   )
 }
 
@@ -28,7 +37,6 @@ class Content extends React.Component {
     super(props);
     this.state = {
       data: '',
-      article_headings: [],
     }
   }
 
@@ -41,18 +49,47 @@ class Content extends React.Component {
   }
 
   render() {
-    let arr = this.state.article_headings;
+    let article_headings = [];
+    let article_images = [];
+    let article_hrefs = [];
+    let article_blurbs = [];
+
     const $ = cheerio.load(this.state.data);
 
-    $('h4.heading').map((i,e) => { 
-      arr.push($(e).text());
-      console.log($(e).text()) })
+    // article headings
+    $('.heading').map((i,e) => { 
+      article_headings.push($(e).text());
+    })
 
-    return(
-      this.state.article_headings.length === 0 ? <div>loading...</div> : 
-      <div>
+    // article images
+    $('.story-block  > a > img').map((i,e) => { 
+      article_images.push($(e).attr('src'));
+    })
+
+    // article links - remove dupes
+    $('.heading  > a').map((i,e) => { 
+      article_hrefs.push($(e).attr('href'));
+    })
+
+    // article blurbs -- to fix
+    $('.story-block > p > span').map((i,e) => { 
+      // console.log($(e).text())
+      article_blurbs.push($(e).text());
+    })
+
+    return (
+      article_headings.length === 0 ? 
+      <div className="container text-center">
+        <h1 className="my-3">News of the Day</h1>
+        <h2 className="my-3">Loading...</h2>
+        <div className="spinner-border text-primary" role="status">
+        </div>
+      </div>
+      : 
+      <div className="container">
+        <h1 className="text-center my-3">News of the Day</h1>
         <ul> { 
-          this.state.article_headings.map((e,i) => <li>{e}</li>
+          article_headings.map((e,i) => <li key={i} className="font-weight-bold article-heading">{e}</li>
         )}
         </ul>
       </div>
