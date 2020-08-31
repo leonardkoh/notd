@@ -1,5 +1,5 @@
 import React from 'react';
-import logo, { ReactComponent } from './logo.svg';
+// import logo, { ReactComponent } from './logo.svg';
 import './App.css';
 
 const cheerio = require('cheerio');
@@ -57,22 +57,22 @@ class Content extends React.Component {
     const $ = cheerio.load(this.state.data);
 
     // article headings
-    $('.heading').map((i,e) => { 
+    $('.heading').each((i,e) => { 
       article_headings.push($(e).text());
     })
 
     // article images
-    $('.story-block  > a > img').map((i,e) => { 
+    $('.story-block  > a > img').each((i,e) => { 
       article_images.push($(e).attr('src'));
     })
 
     // article links - remove dupes
-    $('.heading  > a').map((i,e) => { 
+    $('.heading  > a').each((i,e) => { 
       article_hrefs.push($(e).attr('href'));
     })
 
     // article blurbs -- to fix
-    $('.story-block > p > span').map((i,e) => { 
+    $('.story-block > p > span').each((i,e) => { 
       // console.log($(e).text())
       article_blurbs.push($(e).text());
     })
